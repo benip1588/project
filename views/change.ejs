@@ -1,0 +1,45 @@
+<html>
+<title>Edit <%docs[0].name%></title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+<body>
+
+<div class="w3-container w3-teal">
+  <h1>Edit <%docs[0].name%></h1>
+</div>
+
+<form action="/change/<%=docs[0]._id%>" method="POST""
+      class="w3-container" style="width:100%">
+  <p>
+  <input name="name" id ="name" class="w3-input" type="text" value = "<%=docs[0].name %>" required> 
+  <label class="w3-label w3-validate" >Name</label></p>
+  <p>
+  <input name="cuisine" id = "cuisine" class="w3-input" type="text" value = "<%=docs[0].cuisine %>">
+  <label class="w3-label w3-validate">Cuisine</label></p>
+  <p>
+  <input name="street" id = "street" class="w3-input" type="text" value = "<%=docs[0].street %> ">
+  <label class="w3-label w3-validate">Street</label></p>
+  <p>
+  <p>
+  <input name="building" id = "building" class="w3-input" type="text" value = "<%=docs[0].building %>">
+  <label class="w3-label w3-validate">Building</label></p>
+  <p>
+  <p>
+  <input name="zipcode" id = "zipcode" class="w3-input" type="text" value = "<%=docs[0].zipcode %>">
+  <label class="w3-label w3-validate">Zipcode</label></p>
+  <p>
+  <p>
+  <input name="lon" id = "lon" class="w3-input" type="text"  value = "<%=docs[0].lon %>">
+  <label class="w3-label w3-validate">GPS Coordinates (lon.)</label></p>
+  <p>
+  <input name="lat" id = "lat" class="w3-input" type="text" value = " <%=docs[0].lat%>"></input>
+  <label class="w3-label w3-validate">GPS Coordinates (lat.)</label></p>
+  <p>
+ <input name="sampleFile"class="w3-input" type="file">
+ <label class="w3-label w3-validate">Photo</label></p>
+  <p>
+  <button class="w3-btn w3-section w3-teal w3-ripple" type = "submit"> Create </button></p>
+</form>
+
+</body>
+</html>
