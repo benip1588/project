@@ -13,7 +13,7 @@ const assert = require('assert');
 var url = require('url')
 const MongoClient = require('mongodb').MongoClient;
 const dbName = 'test';
-const uri = "mongodb+srv://benip:Darknessben12@cluster0.1finy.mongodb.net/test?retryWrites=true&w=majority";
+const uri = "";
 const client = new MongoClient(uri, { useNewUrlParser: true }, { useUnifiedTopology: true });
 var mongodb = require('mongodb');
 
