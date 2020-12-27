@@ -1,0 +1,36 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "devStart": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "assert": "^2.0.0",
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
+    "cjs-loader": "^0.1.0",
+    "connect-mongo": "^3.2.0",
+    "cookie": "^0.4.1",
+    "cookie-session": "^1.4.0",
+    "ejs": "^3.1.5",
+    "ejs-promise": "^0.3.3",
+    "express": "^4.17.1",
+    "express-flash": "0.0.2",
+    "express-session": "^1.17.1",
+    "git": "^0.1.5",
+    "mongodb": "^3.6.3",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "redis": "^3.0.2",
+    "session": "^0.1.0"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.6"
+  }
+}
