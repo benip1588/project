@@ -17,16 +17,17 @@ const uri = "";
 const client = new MongoClient(uri, { useNewUrlParser: true }, { useUnifiedTopology: true });
 var mongodb = require('mongodb');
 
+app.set('views' , './views')
 app.set('view-engine', 'ejs')
 app.use(express.urlencoded({ extended: false }))
 app.use(flash())
 app.use(session({
   secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false,
+  resave: true,
+  saveUninitialized: true,
   cookie:{
-      secure:true,
-      maxAge:60000}
+      secure:true},
+    key: ['x' , 'y']
 }))
 app.use(passport.initialize())
 app.use(passport.session())
@@ -52,11 +53,8 @@ var logineduserid = ''
 var loginedusername = ''
 var doccount = 1
 const file = []
-var selecteddoc = 0
-var docrank = 0
 var docs = []
 var tempdoc = []
-var criteria = {}
 var tempdocs = []
 
 
@@ -80,13 +78,13 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
 }))
 
 app.get('/read' ,  checkAuthenticated , async (req, res) => {
-    logineduserid = req.user.id
-    loginedusername = req.user.username
+    logineduserid = req.user.id // check userid who logined
+    loginedusername = req.user.username // check user who logined
     console.log(logineduserid,loginedusername)
     
     const db = client.db(dbName);
-    docs = await db.collection('restaurants').find().toArray()
-    doccount = docs.length
+    docs = await db.collection('restaurants').find().toArray() // pass the mongodb document to the docs array
+    doccount = docs.length // check how many document in mongodb
     res.render('read.ejs', { username: loginedusername, doccount: doccount , docs: docs})
 })
 
@@ -98,7 +96,7 @@ app.get ('/new', checkAuthenticated , (req,res) => {
 app.post('/new' ,  checkAuthenticated, async (req, res, next) => {
     console.log(req.body)
     const db = client.db(dbName);
-    db.collection('restaurants').insertOne({
+    db.collection('restaurants').insertOne({ // to create and insert the user input to mongodb
         restaurant_id: Date.now().toString(),
         name: req.body.name,
         cuisine: req.body.cuisine,
@@ -110,7 +108,7 @@ app.post('/new' ,  checkAuthenticated, async (req, res, next) => {
         owner: loginedusername
     })
     
-    console.log(docs)
+    console.log(docs) 
     // console.log(docs)
     res.redirect('/read')
 })
@@ -118,9 +116,9 @@ app.post('/new' ,  checkAuthenticated, async (req, res, next) => {
 app.get('/display/:id' , async (req,res) => {
     const db = client.db(dbName);
     
-    let id =req.params.id
+    let id =req.params.id // check which file user selected by the id
    
-    var idd = await db.collection('restaurants').find({_id: new mongodb.ObjectID(id)}).toArray()
+    var idd = await db.collection('restaurants').find({_id: new mongodb.ObjectID(id)}).toArray() //find the id in the mongodb and pass to idd array
 
     res.render('display.ejs', {tempdocs: idd})
 })
@@ -133,9 +131,9 @@ app.get('/rate/:id', (req,res)=>{
 app.get('/change/:id' , async (req,res) => {
     let id =req.params.id
     const db = client.db(dbName);
-    tempdoc = await db.collection('restaurants').find({_id: new mongodb.ObjectID(id)}).toArray()
+    tempdoc = await db.collection('restaurants').find({_id: new mongodb.ObjectID(id)}).toArray() //find the id in the mongodb and pass to tempdoc array
     console.log(tempdoc)
-    if(tempdoc[0].owner !== loginedusername){
+    if(tempdoc[0].owner !== loginedusername){ //check the logined user is equal to the document owner
         res.redirect('/read')
         console.log("You are not the owner")
     }
@@ -159,7 +157,7 @@ app.post('/change/:id', (req,res) => {
     } }
     console.log(tempdoc)
     
-    db.collection("restaurants").updateOne({_id: new mongodb.ObjectID(id)},myquery ,function(err, obj) {
+    db.collection("restaurants").updateOne({_id: new mongodb.ObjectID(id)},myquery ,function(err, obj) { //update the document in mongodb
         if (err) throw err;
         console.log("1 document changed");
     })
@@ -170,8 +168,8 @@ app.get('/remove/:id' , async (req,res) => {
     let id =req.params.id
     const db = client.db(dbName);
     console.log(id)
-    tempdoc = await db.collection('restaurants').find({_id: new mongodb.ObjectID(id)}).toArray()
-    if(tempdoc[0].owner !== loginedusername){
+    tempdoc = await db.collection('restaurants').find({_id: new mongodb.ObjectID(id)}).toArray()//find the id in the mongodb and pass to tempdoc array
+    if(tempdoc[0].owner !== loginedusername){//check the logined user is equal to the document owner
         res.redirect('/read')
         console.log("You are not the owner")
     }
