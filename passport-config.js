@@ -5,14 +5,16 @@ function initialize(passport, getUserByname, getUserById) {
   const authenticateUser = async (username, password, done) => {
   
     const user = getUserByname(username)
-    console.log(user)
+    //console.log(user)
     if (user == null) {
       return done(null, false, { message: 'No user with that username' })
     }
 
     try {
       if(user.password === null && username === 'demo' || username ==='student'){
+        console.log(user)
         return done(null, user)
+        
       }
       else if (await bcrypt.compare(password, user.password)) { 
         return done(null, user)

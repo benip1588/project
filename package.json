@@ -16,6 +16,7 @@
     "cjs-loader": "^0.1.0",
     "connect-mongo": "^3.2.0",
     "cookie": "^0.4.1",
+    "cookie-parser": "^1.4.5",
     "cookie-session": "^1.4.0",
     "ejs": "^3.1.5",
     "ejs-promise": "^0.3.3",
