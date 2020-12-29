@@ -1,7 +1,6 @@
 if(process.env.NODE_ENV != 'production'){
-    require('dotenv').config()
+    require('dotenv').config();
 }
-
 
 const express = require('express')
 const app = express()
@@ -16,27 +15,27 @@ const dbName = 'test';
 const uri = "";
 const client = new MongoClient(uri, { useNewUrlParser: true }, { useUnifiedTopology: true });
 var mongodb = require('mongodb');
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser')
 
-app.set('views' , './views')
 app.set('view-engine', 'ejs')
 app.use(express.urlencoded({ extended: false }))
+app.use(bodyParser());
+app.use(cookieParser());
 app.use(flash())
 app.use(session({
+ key: 'hi',
   secret: process.env.SESSION_SECRET,
-  resave: true,
-  saveUninitialized: true,
+  resave: false,
+  saveUninitialized: false,
   cookie:{
-      secure:true},
-    key: ['x' , 'y']
+      maxAge: 2678400000}
 }))
 app.use(passport.initialize())
 app.use(passport.session())
-var bodyParser = require('body-parser');
-app.use(bodyParser.json());
-
 const initializePassport = require('./passport-config')
-const { ObjectId } = require('mongodb')
 initializePassport(passport, username => users.find(user => user.username === username), id => users.find(user => user.id === id))
+const { ObjectId } = require('mongodb')
 
 
 
